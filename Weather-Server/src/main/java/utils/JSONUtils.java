@@ -31,7 +31,7 @@ public class JSONUtils {
 
         try {
             sb.append("Now in " + json.getString("name") + "\n");
-            sb.append("temperature: " +
+            sb.append("temperature: " + (int)
                             Utils.tempKelvinToCelsius(json.getJSONObject("main").getDouble("temp")) +
                             "°С \n"
             );
