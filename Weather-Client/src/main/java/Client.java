@@ -52,7 +52,7 @@ public class Client {
                 menuSelection = mainMenu();
                 out.print(menuSelection);
                 out.println();
-                
+
             }
 
         } catch (UnknownHostException e) {

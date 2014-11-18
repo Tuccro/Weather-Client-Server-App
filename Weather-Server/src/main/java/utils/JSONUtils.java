@@ -20,28 +20,4 @@ public class JSONUtils {
         }
         return true;
     }
-
-    public static String openWeatherJSONParser(JSONObject json) {
-
-        if (json.has("cod") && json.getInt("cod") != 200) {
-            return CITY_NOT_FOUND;
-        }
-
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            sb.append("Now in " + json.getString("name") + "\n");
-            sb.append("temperature: " + (int)
-                            Utils.tempKelvinToCelsius(json.getJSONObject("main").getDouble("temp")) +
-                            "°С \n"
-            );
-            sb.append("wind: " + json.getJSONObject("wind").getInt("speed") + " mps\n");
-            sb.append("pressure: " + json.getJSONObject("main").getInt("pressure") + " hPa");
-
-        } catch (JSONException e) {
-
-        }
-
-        return sb.toString();
-    }
 }

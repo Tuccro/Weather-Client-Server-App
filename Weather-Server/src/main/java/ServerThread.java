@@ -62,6 +62,14 @@ public class ServerThread extends Thread {
             case 1:
                 sendMessage(weather.getWeather());
                 break;
+            case 2:
+                try {
+                    input.close();
+                    output.close();
+                    client.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
 
     }
