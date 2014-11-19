@@ -2,7 +2,6 @@ package weather;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import utils.JSONUtils;
 import utils.RestUtil;
 import utils.Utils;
 
@@ -48,7 +47,7 @@ public class OpenWeather {
         String requestURL = serviceLink.concat(city);
         String responseFromServer = RestUtil.httpGet(requestURL);
 
-        if (!JSONUtils.isJSONValid(responseFromServer)) {
+        if (!Utils.isJSONValid(responseFromServer)) {
             System.out.println("Error: " + responseFromServer);
         } else {
             json = new JSONObject(responseFromServer);

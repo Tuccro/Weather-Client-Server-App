@@ -18,40 +18,41 @@ public class Client {
 
         String hostName = args[0];
 
+        mainMenu(hostName);
+
+
+    }
+
+    public static void connect(String hostName) {
         try {
 
             Socket socket = new Socket(hostName, 15432);
+            boolean run = true;
 
             System.out.println("Establishing connection.");
 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             final BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+            PrintThread pt = new PrintThread(input);
+            pt.start();
 
-            Thread printThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    String outputString;
-                    while (true) {
-                        try {
-                            while (((outputString = input.readLine()) != null) && (!outputString.equals("END_OF_MESSAGE"))) {
-                                System.out.println(outputString);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-
-            printThread.start();
-
-            while (true) {
+            while (run) {
 
                 int menuSelection;
-                menuSelection = mainMenu();
+                menuSelection = clientMenu();
                 out.print(menuSelection);
                 out.println();
+
+                if (menuSelection == 3) {
+                    run = false;
+                    pt.stopThread();
+                    input.close();
+                    out.close();
+                    socket.close();
+                    System.out.println("Disconnected from server");
+                    mainMenu(hostName);
+                }
 
             }
 
@@ -64,27 +65,13 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // finally, close the socket and decrement runningThreads
-        finally {
-/*
-            try {
-                socket.close();
-                System.out.flush();
-            }
-            catch (IOException e ) {
-                System.out.println("Couldn't close socket");
-            }
-            */
-        }
-
     }
 
-    public static int mainMenu() {
+    public static int clientMenu() {
         int menuSelection = 0;
-        // loop (and prompt again) until the user's input is an integer between 1 and 8
+
         while ((menuSelection <= 0) || (menuSelection > 8)) {
-            System.out.println("The menu provides the following choices to the user: ");
-            System.out.println("1. Host current Date and Weather \n2. Quit ");
+            System.out.println("1. Host current time and weather \n2. Server statistics\n3. Quit ");
             System.out.print("Please provide number corresponding to the action you want to be performed: \n");
             Scanner sc = new Scanner(System.in);
             if (sc.hasNextInt()) menuSelection = sc.nextInt();
@@ -92,5 +79,25 @@ public class Client {
         return menuSelection;
     }
 
+    public static void mainMenu(String hostName) {
+
+        int menuSelection = 0;
+
+        while ((menuSelection <= 0) || (menuSelection > 2)) {
+            System.out.println("1. Connect to server \n2. Quit ");
+            System.out.print("Please provide number corresponding to the action you want to be performed: \n");
+            Scanner sc = new Scanner(System.in);
+            if (sc.hasNextInt()) menuSelection = sc.nextInt();
+        }
+
+        switch (menuSelection) {
+            case 1:
+                connect(hostName);
+                break;
+            case 2:
+                System.exit(1);
+                break;
+        }
+    }
 
 }

@@ -14,29 +14,8 @@ public class Server {
         final List<ServerThread> list = new ArrayList<ServerThread>();
         final OpenWeather openWeather = new OpenWeather();
 
-        Thread informer = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                long startTime = System.currentTimeMillis();
-
-
-                while (true) {
-                    if (System.currentTimeMillis() - startTime > 60000) {
-
-                        if (!list.isEmpty()) {
-                            String weather = openWeather.getWeather();
-                            for (ServerThread thread : list) {
-                                thread.sendMessage(weather);
-                            }
-                        }
-
-                        startTime = System.currentTimeMillis();
-                    }
-                }
-            }
-        });
-
-        informer.start();
+        AutoInformer ai = new AutoInformer(list, openWeather);
+        ai.start();
 
         try {
             // listen for incoming connections on port 15432
@@ -56,6 +35,9 @@ public class Server {
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
+        } finally {
+            ai.stopThread();
+            System.exit(1);
         }
     }
 }
