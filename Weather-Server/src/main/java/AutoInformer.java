@@ -20,7 +20,6 @@ public class AutoInformer extends Thread {
     public void run() {
         long startTime = System.currentTimeMillis();
 
-
         while (run) {
             if (System.currentTimeMillis() - startTime > ONE_MINUTE) {
 
@@ -31,7 +30,6 @@ public class AutoInformer extends Thread {
                         if (thread.isAlive()) thread.sendMessage(message);
                     }
                 }
-
                 startTime = System.currentTimeMillis();
             }
         }

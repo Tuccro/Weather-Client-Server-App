@@ -19,7 +19,6 @@ public class OpenWeather {
 
     boolean trueInfo = false;
 
-
     public OpenWeather(String city) {
         this.city = city;
     }
@@ -40,7 +39,10 @@ public class OpenWeather {
         }
 
 
-        return ("Now in " + city + "\n") + "temperature: " + temperature + "°С \n" + "wind: " + wind + " mps\n" + "pressure: " + pressure + " hPa";
+        return ("Now in " + city + "\n") +
+                "temperature: " + temperature + "°С \n" +
+                "wind: " + wind + " mps\n" +
+                "pressure: " + pressure + " hPa";
     }
 
     public void update() {

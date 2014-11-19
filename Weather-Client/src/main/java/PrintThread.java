@@ -10,7 +10,6 @@ public class PrintThread extends Thread {
         this.input = input;
     }
 
-
     @Override
     public void run() {
         String outputString;

@@ -19,13 +19,10 @@ public class Client {
         String hostName = args[0];
 
         mainMenu(hostName);
-
-
     }
 
     public static void connect(String hostName) {
         try {
-
             Socket socket = new Socket(hostName, 15432);
             boolean run = true;
 
@@ -53,7 +50,6 @@ public class Client {
                     System.out.println("Disconnected from server");
                     mainMenu(hostName);
                 }
-
             }
 
         } catch (UnknownHostException e) {
@@ -70,7 +66,7 @@ public class Client {
     public static int clientMenu() {
         int menuSelection = 0;
 
-        while ((menuSelection <= 0) || (menuSelection > 8)) {
+        while ((menuSelection <= 0) || (menuSelection > 3)) {
             System.out.println("1. Host current time and weather \n2. Server statistics\n3. Quit ");
             System.out.print("Please provide number corresponding to the action you want to be performed: \n");
             Scanner sc = new Scanner(System.in);

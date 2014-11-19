@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
 public class RestUtil {
 
     public static String httpGet(String urlStr) {
@@ -44,5 +43,4 @@ public class RestUtil {
 
         return response;
     }
-
 }

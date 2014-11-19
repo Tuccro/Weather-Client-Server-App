@@ -1,3 +1,4 @@
+import utils.Utils;
 import weather.OpenWeather;
 
 import java.io.BufferedReader;
@@ -54,7 +55,6 @@ public class ServerThread extends Thread {
                 e.printStackTrace();
             }
         }
-
     }
 
     public void sendMessage(String message) {
@@ -76,7 +76,6 @@ public class ServerThread extends Thread {
                 stopThread();
                 break;
         }
-
     }
 
     private String getTime() {
@@ -103,6 +102,7 @@ public class ServerThread extends Thread {
 
     private String checkServer() {
         long upTime = System.currentTimeMillis() - startTime;
-        return "Server running: " + (int) upTime / 60000 + " minutes and is ready for commands.";
+        return "\nServer running: " + (int) upTime / 60000 + " minutes and is ready for commands.\n" +
+                "Access to weather API server: " + Utils.checkInternetConnection();
     }
 }
